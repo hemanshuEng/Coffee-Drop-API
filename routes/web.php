@@ -37,6 +37,6 @@ Route::get('/', function () {
             echo $e->getMessage();
         }
     }
-
+   
     //return view('welcome');
 });

@@ -1,0 +1,5 @@
+{
+"postcode": "CV313PP",
+"opening_times": {"monday" : "09:00", "tuesday" :"09:00", "saturday" : "08:30"}
+"closing_times": {"monday" : "19:00", "tuesday" : "19:00", "saturday" : "18:30"}
+}
