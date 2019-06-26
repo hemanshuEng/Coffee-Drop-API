@@ -16,10 +16,10 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('postcode');
-            $table->double('longitude',6,2);
-            $table->double('latitude',6,2);
-            $table->string('district');
-            $table->string('county');
+            $table->double('longitude', 9, 6);
+            $table->double('latitude', 9, 6);
+            $table->string('district')->nullable();
+            $table->string('county')->nullable();
             $table->timestamps();
         });
     }
