@@ -21,7 +21,7 @@ class CoffeecupController extends Controller
         $total_amount = 0;
         foreach ($request->all() as $key => $cups) {
             $coffeecup = CoffeeCup::where('coffeecup', $key)->first();
-            $pence = $coffeecup->price->where('max', '>=', $cups)->first()->pence;
+            $pence = $coffeecup->price->where('max', '>=', $cups)->where('min','<=',$cups)->first()->pence;
             $total_amount += ($cups * $pence);
         }
         return response([
