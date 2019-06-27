@@ -54,6 +54,8 @@ response
 	"postcode":"LA177UY"
 }`
 
+## postman file
+[Json File](https://github.com/hemanshuEng/Coffee-Drop-API/blob/master/CoffeeDrop.postman_collection.json) 
    
 ## Laravel packages 
 1. CSV.thephpleague [Documentation](https://csv.thephpleague.com/)   
@@ -65,7 +67,6 @@ response
 1. Authentication 
 2. web app using this api and leaflet.js to locate postcode on map
    
-
 
 
 
