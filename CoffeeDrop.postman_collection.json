@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "9b1eb08f-f8a7-4e9e-b9e0-8db4d2425c9a",
+		"name": "CoffeeDrop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Location All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coffeedrop.test/api/locations",
+					"protocol": "http",
+					"host": [
+						"coffeedrop",
+						"test"
+					],
+					"path": [
+						"api",
+						"locations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Location",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"postcode\": \"LE46NY\",\r\n\"opening_times\": {\"monday\" : \"09:00\", \"tuesday\" :\"09:00\", \"saturday\" : \"08:30\"},\r\n\"closing_times\": {\"monday\" : \"19:00\", \"tuesday\" : \"19:00\", \"saturday\" : \"18:30\"}\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://coffeedrop.test/api/locations",
+					"protocol": "http",
+					"host": [
+						"coffeedrop",
+						"test"
+					],
+					"path": [
+						"api",
+						"locations"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cashback Coffee",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Ristretto\":10,\n\t\"Espresso\":100,\n\t\"Lungo\":3\n}"
+				},
+				"url": {
+					"raw": "http://coffeedrop.test/api/cashback",
+					"protocol": "http",
+					"host": [
+						"coffeedrop",
+						"test"
+					],
+					"path": [
+						"api",
+						"cashback"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Nearest Location",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"postcode\":\"B6 9EH\"\n}"
+				},
+				"url": {
+					"raw": "http://coffeedrop.test/api/getnearestlocation",
+					"protocol": "http",
+					"host": [
+						"coffeedrop",
+						"test"
+					],
+					"path": [
+						"api",
+						"getnearestlocation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

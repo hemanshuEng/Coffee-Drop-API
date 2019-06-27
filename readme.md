@@ -65,15 +65,6 @@ response
 1. Authentication 
 2. web app using this api and leaflet.js to locate postcode on map
    
-## project build process
-1. `composer create-project laravel/laravel CoffeeDrop`
-2. create .env file and add database credentials
-3. create migrations location,timetable,Coffeepod,price
-4. create model location,timetable,coffeecup,price
-5. Eloquent (relation between location and timetable,relation between coffeecup and price)
-6. seeder for location and price and coffecup ,using csv package and poscode package all data are imported into database
-7. create resource for location api
-8. controllers for location and coffeecup 
 
 
 
