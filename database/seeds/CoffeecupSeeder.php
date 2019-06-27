@@ -13,6 +13,10 @@ class CoffeecupSeeder extends Seeder
      */
     public function run()
     {
+        /**
+         *  seed for coffee pod price according to capsules
+         *
+         */
         $coffeecup1 = Coffeecup::create(['coffeecup' => 'Ristretto']);
         Price::create([
             'coffeecup_id' => $coffeecup1->id,

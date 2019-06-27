@@ -11,6 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        /**
+         *  location seeder and Coffeecup seeder
+         */
          $this->call(LocationSeeder::class);
          $this->call(CoffeecupSeeder::class);
     }
