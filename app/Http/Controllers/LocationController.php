@@ -42,16 +42,16 @@ class LocationController extends Controller
         $location->county = $result->result->admin_ward;
         $location->save();
 
-        for ($i = 1; $i < 8; $i++) {
+        for ($i = 0; $i <7; $i++) {
             $timetable = new Timetable;
-            $day = $days[$i - 1];
+            $day = $days[$i];
 
             if (array_key_exists($day, $request->opening_times)) {
-                $timetable->day = $i - 1;
+                $timetable->day = $i ;
                 $timetable->open = $request->opening_times[$day];
                 $timetable->closed  = $request->closing_times[$day];
             } else {
-                $timetable->day = $i - 1;
+                $timetable->day = $i ;
                 $timetable->open = null;
                 $timetable->closed  = null;
             }

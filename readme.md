@@ -73,7 +73,7 @@ response
 5. Eloquent (relation between location and timetable,relation between coffeecup and price)
 6. seeder for location and price and coffecup ,using csv package and poscode package all data are imported into database
 7. create resource for location api
-8. controller for location and coffeecup 
+8. controllers for location and coffeecup 
 
 
 

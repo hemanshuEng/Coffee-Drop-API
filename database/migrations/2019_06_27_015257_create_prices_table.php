@@ -15,10 +15,10 @@ class CreatePricesTable extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('coffeecup_id');
-            $table->integer('max');
-            $table->integer('min');
-            $table->integer('pence');
+            $table->integer('coffeecup_id');  // coffee cup id( Risetto,Espresso,Lungo)
+            $table->integer('max');           // max amount capsules
+            $table->integer('min');           // min amount capsules
+            $table->integer('pence');         // price in pence according to capsules
             $table->timestamps();
         });
     }

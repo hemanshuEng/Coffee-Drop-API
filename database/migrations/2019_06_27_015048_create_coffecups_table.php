@@ -15,7 +15,7 @@ class CreateCoffecupsTable extends Migration
     {
         Schema::create('coffeecups', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('coffeecup');
+            $table->string('coffeecup');  // coffee pod names
             $table->timestamps();
         });
     }
