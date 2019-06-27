@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('locations', 'LocationController@index')->name('location.index');
+Route::post('locations', 'LocationController@store')->name('location.store');

@@ -16,27 +16,18 @@ use Jabranr\PostcodesIO\PostcodesIO;
 */
 
 Route::get('/', function () {
-    $postcodeFinder = new PostcodesIO();
-    $csv = Reader::createFromPath(storage_path('location_data.csv'), 'r');
-    $csv->setHeaderOffset(0);
 
-
-    $stmt = (new Statement());
-
-    $records = $stmt->process($csv);
-    foreach ($records as $key => $record) {
-        try {
-            $addresses = $postcodeFinder->find($record['postcode']);
-            $arrkey = array_keys($record);
-
-            for ($i = 0; $i < 7; $i++) {
-                echo $record[$arrkey[$i + 1]];
-                echo "<br>";
-            }
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+    $days = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday');
+    $test = array('sunday' => 19, 'monday' => 20);
+    for ($i = 1; $i < 8; $i++) {
+        $day = $days[$i - 1];
+        if (array_key_exists($day, $test)) {
+            //$timetable->location_id = $location->id;
+            echo $day;
+        } else {
+            //$timetable->location_id = $location->id;
+            echo $day;
         }
     }
-   
     //return view('welcome');
 });
