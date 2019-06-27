@@ -18,16 +18,20 @@ class LocationResource extends JsonResource
          * retrieve time for location using this method
          */
         $timetable = $this->timetable->map(function ($item, $key) {
+
             $days = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday');
+
             if ($item->open == null) {
+
                 return ['day' => $days[$item->day], 'open' => 'CLOSED', 'closed' => 'CLOSED'];
             } else {
+
                 return ['day' => $days[$item->day], 'open' => $item->open, 'closed' => $item->closed];
             }
         });
 
-       // response format
-       
+        // response format
+
         return [
             'address' => [
                 'distrist' => $this->district,
