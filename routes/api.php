@@ -18,7 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// route for all location information and timetable
 Route::get('locations', 'LocationController@index')->name('location.index');
+
+// create new location using this api
 Route::post('locations', 'LocationController@store')->name('location.store');
+
+//cashback calculation
 Route::post('cashback', 'CoffeecupController@amount')->name('coffeecup.amount');
+
+// nearest location according to search query
 Route::post('getnearestlocation', 'LocationController@find_near_location')->name('location.find');
