@@ -64,18 +64,52 @@ class LocationController extends Controller
         ], Response::HTTP_CREATED);
     }
 
+    private function get_location_near($latitude, $longitude, $radius = 100)
+    {
+
+        $result = Location::select('*')
+            ->selectRaw('( 3959 * acos( cos( radians(?) ) *
+                               cos( radians( latitude ) )
+                               * cos( radians( longitude ) - radians(?)
+                               ) + sin( radians(?) ) *
+                               sin( radians( latitude ) ) )
+                             ) AS distance', [$latitude, $longitude, $latitude])
+            ->havingRaw("distance < ?", [$radius])->orderBy("distance")
+            ->first();
+
+        return $result;
+    }
 
 
 
-    
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Location  $location
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Location $location)
+    public function find_near_location(Request $request)
     {
-        //
+        $postcode = $request->postcode;
+        if ($postcode == null) {
+            return response([
+                'data' => 'No Postcode entered'
+            ], Response::HTTP_OK);
+        }
+
+        $postcodeFinder = new PostcodesIO();
+        try {
+            $geolocation = $postcodeFinder->find($request->postcode);
+            $closestlocation = $this->get_location_near($geolocation->result->latitude, $geolocation->result->longitude);
+            return response([
+                'closestlocation' => new LocationResource($closestlocation),
+                'distance' => $closestlocation->distance
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response([
+                'data' => 'Postcode is not valid',
+                'error' => $e->getMessage()
+            ], Response::HTTP_OK);
+        }
     }
 }

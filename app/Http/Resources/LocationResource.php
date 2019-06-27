@@ -14,16 +14,28 @@ class LocationResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        $timetable = $this->timetable->map(function ($item, $key) {
+            $days = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday');
+            if ($item->open == null) {
+                return ['day' => $days[$item->day], 'open' => 'CLOSED', 'closed' => 'CLOSED'];
+            } else {
+                return ['day' => $days[$item->day], 'open' => $item->open, 'closed' => $item->closed];
+            }
+        });
+
+
         return [
+            'address' => [
+                'distrist' => $this->district,
+                'county' => $this->county,
+            ],
             'postcode' => $this->postcode,
             'geolocation' => [
                 'longitude' => $this->longitude,
                 'latitude' => $this->latitude,
             ],
-            'address' => [
-                'distrist' => $this->district,
-                'county' => $this->county,
-            ]
+            'hours' => $timetable
 
         ];
     }
