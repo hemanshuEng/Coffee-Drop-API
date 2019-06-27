@@ -14,7 +14,9 @@ class LocationResource extends JsonResource
      */
     public function toArray($request)
     {
-
+        /**
+         * retrieve time for location using this method
+         */
         $timetable = $this->timetable->map(function ($item, $key) {
             $days = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday');
             if ($item->open == null) {
@@ -24,7 +26,8 @@ class LocationResource extends JsonResource
             }
         });
 
-
+       // response format
+       
         return [
             'address' => [
                 'distrist' => $this->district,
