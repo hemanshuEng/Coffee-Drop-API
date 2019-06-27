@@ -8,6 +8,6 @@ class Coffeecup extends Model
 {
     public function price()
     {
-        return $this->belongsTo('App\Price');
+        return $this->hasMany('App\Price');
     }
 }
