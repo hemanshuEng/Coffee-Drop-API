@@ -22,7 +22,7 @@ class LocationController extends Controller
         /**
          * responce all location time in pagination
          */
-        return LocationResource::collection(Location::paginate(5));
+        return LocationResource::collection(Location::all());
     }
 
 
@@ -91,8 +91,6 @@ class LocationController extends Controller
                 'data' => $location,
                 'message' => 'New location has been added'
             ], Response::HTTP_CREATED);
-
-
         }
         // if error occur during api calls
         catch (\Exception $e) {
@@ -142,11 +140,11 @@ class LocationController extends Controller
 
         if ($postcode == null) {
             return response([
-            'message' => 'No Postcode entered'
+                'message' => 'No Postcode entered'
             ], Response::HTTP_OK);
         }
 
-        $postcodeFinder = new PostcodesIO();// api call for postcode
+        $postcodeFinder = new PostcodesIO(); // api call for postcode
 
         try {
             //find geo information from api call
@@ -160,7 +158,7 @@ class LocationController extends Controller
                 'distance' => $closestlocation->distance
             ], Response::HTTP_OK);
 
-          // if erro occurs then responce 
+            // if erro occurs then responce
         } catch (\Exception $e) {
             return response([
                 'data' => 'Postcode is not valid',

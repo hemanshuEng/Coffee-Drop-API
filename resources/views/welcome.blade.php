@@ -1,99 +1,60 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <title>Laravel</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Fonts -->
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
+    <!-- Styles -->
+</head>
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark  bg-dark">
+            <a class="navbar-brand" href="#">CoffeeDrop</a>
+        </nav>
+    </header>
+    <div class="container">
+        <section class="cashback">
+            <div class="text-center display-4 mb-2">Cashback</div>
+            <form id="cashback-form" method="post" class="needs-validation mb-5 ">
+                @csrf
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="ristretto">Ristretto</label>
+                        <input type="number" class="form-control" id="ristretto" placeholder="Enter Quantity" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="espresso">Espresso</label>
+                        <input type="number" class="form-control" id="espresso" placeholder="Enter Quantity" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="lungo">Lungo</label>
+                        <input type="number" class="form-control" id="lungo" placeholder="Enter Quantity" required>
+                    </div>
                 </div>
-            @endif
+                <button type="submit" class="btn btn-dark float-right">Submit</button>
+            </form>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+        </section>
+        <section id="coffeedrop-shop">
+            <div class="text-center display-4 mb-2">CoffeeDrop Shops</div>
+            <div id="mapid"></div>
+        </section>
+    </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
+    <script src="{{ asset('js/app.js')}}"></script>
+</body>
+
 </html>
