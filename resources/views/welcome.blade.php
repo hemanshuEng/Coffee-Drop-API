@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    @include('inc.topbar')
+    @include('inc.header')
     <div class="container">
         @include('components.nearestplace')
         @include('components.cashback')

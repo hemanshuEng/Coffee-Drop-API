@@ -2,6 +2,8 @@
 
 <section id="newshop">
     <div class="text-center display-4 mb-2">Enter New Shop</div>
+
+    <!-- form-->
     <form id="newshop-form" method="post" class="needs-validation mb-5 ">
         @csrf
         <div class="form-group row">
@@ -78,6 +80,7 @@
         </div>
         <button type="submit" class="btn btn-dark ">Enter New shop</button>
     </form>
+    <!-- alert-->
     <div class="alert alert-success alert-dismissible fade" id="newshop-alert" role="alert">
         <h6 class="text-center " id='newshop-msg'></h6>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
