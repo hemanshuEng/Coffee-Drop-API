@@ -68,6 +68,12 @@ response
 2. web app using this api and leaflet.js to locate postcode on map
    
 
-
+## Responsive website for CoffeDrop Startup
+This website is built using laravel restfulAPI ,leaflet js is used to display shop location on map , bootstap framework is used for styling
+1. find nearest coffeshop's address and opening hours and display on to map
+2. recieve cashback according to quantity of used coffee pods
+3. add new shop location
+4. display all shop location 
+   
 
  
