@@ -41,7 +41,7 @@ class LocationController extends Controller
         if (Location::where('postcode', $request->postcode)->exists()) {
             //return response
             return response([
-                'error' => 'Postcode already exist!',
+                'message' => 'Postcode already exist!',
             ], Response::HTTP_OK);
         }
         /**
@@ -96,7 +96,7 @@ class LocationController extends Controller
         catch (\Exception $e) {
 
             return response([
-                'error' => 'Postcode is not valid',
+                'message' => 'Postcode is not valid',
             ], Response::HTTP_OK);
         }
     }

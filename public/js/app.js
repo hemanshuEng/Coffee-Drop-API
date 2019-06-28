@@ -36873,11 +36873,18 @@ newshopForm.addEventListener("submit", function (event) {
     closing_times: closing_time
   };
   axios.post("/api/locations", data, headers).then(function (response) {
-    console.log(response);
+    var message = response.data.message;
+    document.querySelector("#newshop-msg").innerHTML = " ".concat(message);
+    document.querySelector("#newshop-alert").classList.add("show");
   })["catch"](function (error) {
     console.log(error);
   });
   document.querySelector("#postcode-1").value = "";
+
+  for (var index = 0; index < 7; index++) {
+    document.getElementById("day-open-".concat(index)).value = "";
+    document.getElementById("day-close-".concat(index)).value = "";
+  }
 });
 
 /***/ }),

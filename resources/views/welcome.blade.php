@@ -152,6 +152,12 @@
                 </div>
                 <button type="submit" class="btn btn-dark ">Enter New shop</button>
             </form>
+            <div class="alert alert-success alert-dismissible fade" id="newshop-alert" role="alert">
+                    <h6 class="text-center " id='newshop-msg'></h6>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
         </section>
         <section id="coffeedrop-shop">
             <div class="text-center display-4 mb-2">CoffeeDrop Shops</div>

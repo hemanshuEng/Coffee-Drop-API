@@ -61,32 +61,34 @@ postcodeForm.addEventListener("submit", event => {
     document.querySelector("#postcode").value = "";
 });
 
-axios
-    .get("/api/locations")
-    .then(function(response) {
-        const items = response.data.data;
-        items.forEach(item => {
-            const marker = L.marker([
-                item.geolocation.latitude,
-                item.geolocation.longitude
-            ]).addTo(mymap);
-            const hours = item.hours;
-            let text = `<strong>${item.address.distrist}</strong><hr>`;
-            hours.forEach(hour => {
-                text += `${hour.day.toUpperCase()} : ${hour.open} - ${
-                    hour.closed != "CLOSED" ? hour.closed : ""
-                } <br>`;
+    axios
+        .get("/api/locations")
+        .then(function(response) {
+            const items = response.data.data;
+            items.forEach(item => {
+                const marker = L.marker([
+                    item.geolocation.latitude,
+                    item.geolocation.longitude
+                ]).addTo(mymap);
+                const hours = item.hours;
+                let text = `<strong>${item.address.distrist}</strong><hr>`;
+                hours.forEach(hour => {
+                    text += `${hour.day.toUpperCase()} : ${hour.open} - ${
+                        hour.closed != "CLOSED" ? hour.closed : ""
+                    } <br>`;
+                });
+                marker.bindPopup(text);
             });
-            marker.bindPopup(text);
+        })
+        .catch(function(error) {
+            // handle error
+            console.log(error);
+        })
+        .finally(function() {
+            // always executed
         });
-    })
-    .catch(function(error) {
-        // handle error
-        console.log(error);
-    })
-    .finally(function() {
-        // always executed
-    });
+
+
 
 const form = document.getElementById("cashback-form");
 
@@ -157,11 +159,17 @@ newshopForm.addEventListener("submit", event => {
     axios
         .post("/api/locations", data, headers)
         .then(function(response) {
-            console.log(response);
+            const message = response.data.message;
+            document.querySelector("#newshop-msg").innerHTML = ` ${message}`;
+            document.querySelector("#newshop-alert").classList.add("show");
         })
         .catch(function(error) {
             console.log(error);
         });
 
     document.querySelector("#postcode-1").value = "";
+    for (let index = 0; index < 7; index++) {
+        document.getElementById(`day-open-${index}`).value = "";
+        document.getElementById(`day-close-${index}`).value = "";
+    }
 });
