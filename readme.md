@@ -77,7 +77,7 @@ This website is built using laravel restfulAPI ,leaflet js is used to display sh
    
    ![alt](https://github.com/hemanshuEng/Coffee-Drop-API/blob/master/image/Capture.JPG) 
    ![alt](https://github.com/hemanshuEng/Coffee-Drop-API/blob/master/image/Capture1.JPG) 
-   ![alt](https://github.com/hemanshuEng/Coffee-Drop-API/blob/master/image/Capture2.JPG) 
    ![alt](https://github.com/hemanshuEng/Coffee-Drop-API/blob/master/image/Capture3.JPG) 
+   ![alt](https://github.com/hemanshuEng/Coffee-Drop-API/blob/master/image/Capture4.JPG) 
 
  
