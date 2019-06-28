@@ -75,5 +75,6 @@ This website is built using laravel restfulAPI ,leaflet js is used to display sh
 3. add new shop location
 4. display all shop location 
    
+   ![alt](https://github.com/hemanshuEng/Coffee-Drop-API/blob/master/image/Capture.JPG) 
 
  
