@@ -36760,9 +36760,16 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // bootstrap added
 
-var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); // axios for api call
+
+/**
+ * bottom map for all location
+ * leaflet js for map creation and openstreet map
+ */
+
 
 var mymap = L.map("mapid").setView([54.3781, -2.436], 6);
 var attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
@@ -36772,88 +36779,146 @@ var tiles = L.tileLayer(tileUrl, {
   maxZoom: 19
 });
 tiles.addTo(mymap);
+/**
+ * postcode  for nearest location
+ * leaflet js for map creation and openstreet map
+ */
+
 var mymap2 = L.map("mapid-2").setView([54.3781, -2.436], 4);
 var tiles2 = L.tileLayer(tileUrl, {
   attribution: attribution,
   maxZoom: 19
 });
 tiles2.addTo(mymap2);
-var postcodeForm = document.getElementById("postcode-form");
+/**
+ * postcode  for nearest location
+ *
+ */
+// get postcode
+
+var postcodeForm = document.getElementById("postcode-form"); // form event listener
+
 postcodeForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-  var postcode = document.querySelector("#postcode").value;
+  event.preventDefault(); //postcode
+
+  var postcode = document.querySelector("#postcode").value; // header for post method
+
   var headers = {
     "Content-Type": "application/json",
     Accept: "application/json"
-  };
+  }; // data for api call
+
   var data = {
     postcode: postcode
   };
+  /**
+   * axios call for /api/getnearestlocation
+   *
+   */
+
   axios.post("/api/getnearestlocation", data, headers).then(function (response) {
-    var items = response.data.closestlocation;
-    mymap2.setView([items.geolocation.latitude, items.geolocation.longitude], 13);
-    var marker = L.marker([items.geolocation.latitude, items.geolocation.longitude]).addTo(mymap2);
-    var text = "<strong>".concat(items.address.distrist, "</strong><br><strong>").concat(items.address.county, "</strong><br><strong>").concat(items.postcode, "</strong><br>");
+    var items = response.data.closestlocation; // set map in center
+
+    mymap2.setView([items.geolocation.latitude, items.geolocation.longitude], 13); // add marker in map
+
+    var marker = L.marker([items.geolocation.latitude, items.geolocation.longitude]).addTo(mymap2); // get time table information and add in text var
+
+    var text = "<strong>".concat(items.address.distrist, "</strong><br><strong>").concat(items.address.county, "</strong><br><strong>").concat(items.postcode, "</strong><br>"); // formating hour for display
+
     var hours = items.hours;
     hours.forEach(function (hour) {
       text += "".concat(hour.day.toUpperCase(), " : ").concat(hour.open, " - ").concat(hour.closed != "CLOSED" ? hour.closed : "", " <br>");
-    });
-    marker.bindPopup(text);
+    }); // added information on tooltip for marker
+
+    marker.bindPopup(text); // displaying information to webpage
+
     document.querySelector("#address").innerHTML = text;
   })["catch"](function (error) {
+    //error display on console
     console.log(error);
-  });
+  }); // clear field
+
   document.querySelector("#postcode").value = "";
 });
+/**
+ * axios call for all location and dispaly in map
+ *
+ */
+
 axios.get("/api/locations").then(function (response) {
-  var items = response.data.data;
+  // data from api call
+  var items = response.data.data; // multiple marker added in map
+
   items.forEach(function (item) {
-    var marker = L.marker([item.geolocation.latitude, item.geolocation.longitude]).addTo(mymap);
+    //marker on geolocation
+    var marker = L.marker([item.geolocation.latitude, item.geolocation.longitude]).addTo(mymap); // added information on tooltip for marker
+
     var hours = item.hours;
     var text = "<strong>".concat(item.address.distrist, "</strong><hr>");
     hours.forEach(function (hour) {
       text += "".concat(hour.day.toUpperCase(), " : ").concat(hour.open, " - ").concat(hour.closed != "CLOSED" ? hour.closed : "", " <br>");
-    });
+    }); // added information on tooltip for marker
+
     marker.bindPopup(text);
   });
 })["catch"](function (error) {
   // handle error
   console.log(error);
-})["finally"](function () {// always executed
 });
+/**
+ * axios call for cashback
+ *
+ */
+
 var form = document.getElementById("cashback-form");
 form.addEventListener("submit", function (event) {
-  event.preventDefault();
+  event.preventDefault(); // data for coffee cup quantity
+
   var ristretto = document.querySelector("#ristretto").value;
   var espresso = document.querySelector("#espresso").value;
-  var lungo = document.querySelector("#lungo").value;
+  var lungo = document.querySelector("#lungo").value; //header for post method
+
   var headers = {
     "Content-Type": "application/json",
     Accept: "application/json"
-  };
+  }; // data for api call
+
   var data = {
     Ristretto: ristretto,
     Espresso: espresso,
     Lungo: lungo
   };
   axios.post("/api/cashback", data, headers).then(function (response) {
-    var amount = response.data.data.Cashback;
+    // responce for casback
+    var amount = response.data.data.Cashback; //displaying cashback on webpage and alert
+
     document.querySelector("#cashback-amount").innerHTML = "You will receive  \xA3 ".concat(amount);
     document.querySelector("#cashback-alert").classList.add("show");
   })["catch"](function (error) {
     console.log(error);
-  });
+  }); //clear field
+
   document.querySelector("#ristretto").value = "";
   document.querySelector("#espresso").value = "";
   document.querySelector("#lungo").value = "";
 });
-var newshopForm = document.getElementById("newshop-form");
+/**
+ * axios call for adding new shop
+ *
+ */
+
+var newshopForm = document.getElementById("newshop-form"); //form eventlister
+
 newshopForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-  var postcode = document.querySelector("#postcode-1").value;
-  var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  event.preventDefault(); //postcode data
+
+  var postcode = document.querySelector("#postcode-1").value; // week name
+
+  var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]; // empty object for hours
+
   var opening_time = {};
-  var closing_time = {};
+  var closing_time = {}; //method to get all 14 time and adding into object
+
   days.forEach(function (e, index) {
     var open_time = document.getElementById("day-open-".concat(index)).value;
     var close_time = document.getElementById("day-close-".concat(index)).value;
@@ -36862,23 +36927,28 @@ newshopForm.addEventListener("submit", function (event) {
       opening_time[e] = open_time;
       closing_time[e] = close_time;
     }
-  });
+  }); // header for post method
+
   var headers = {
     "Content-Type": "application/json",
     Accept: "application/json"
-  };
+  }; // all data in this object
+
   var data = {
     postcode: postcode,
     opening_times: opening_time,
     closing_times: closing_time
-  };
+  }; // postmethod to added new shop
+
   axios.post("/api/locations", data, headers).then(function (response) {
-    var message = response.data.message;
+    var message = response.data.message; //responce for server and alert message
+
     document.querySelector("#newshop-msg").innerHTML = " ".concat(message);
     document.querySelector("#newshop-alert").classList.add("show");
   })["catch"](function (error) {
     console.log(error);
-  });
+  }); //clear fields
+
   document.querySelector("#postcode-1").value = "";
 
   for (var index = 0; index < 7; index++) {
