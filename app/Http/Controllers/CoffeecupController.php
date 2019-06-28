@@ -48,7 +48,7 @@ class CoffeecupController extends Controller
          * return responce quantity of used coffee pods and cashback amount
          */
         return response([
-            'data' => ['coffeepod' => $request->all(), 'Cashback' => "You will be receive £ " . ($cashback / 100)]
+            'data' => ['coffeepod' => $request->all(), 'Cashback' => ($cashback / 100)]
         ], Response::HTTP_OK);
     }
 }

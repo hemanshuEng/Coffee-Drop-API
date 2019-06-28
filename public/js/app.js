@@ -36760,35 +36760,9 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); //window.Vue = require('vue');
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-// const app = new Vue({
-//     el: '#app',
-// });
-
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 var mymap = L.map("mapid").setView([54.3781, -2.436], 6);
 var attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
@@ -36798,7 +36772,40 @@ var tiles = L.tileLayer(tileUrl, {
   maxZoom: 19
 });
 tiles.addTo(mymap);
-axios.get("http://coffeedrop.test/api/locations").then(function (response) {
+var mymap2 = L.map("mapid-2").setView([54.3781, -2.436], 4);
+var tiles2 = L.tileLayer(tileUrl, {
+  attribution: attribution,
+  maxZoom: 19
+});
+tiles2.addTo(mymap2);
+var postcodeForm = document.getElementById("postcode-form");
+postcodeForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  var postcode = document.querySelector("#postcode").value;
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json"
+  };
+  var data = {
+    postcode: postcode
+  };
+  axios.post("/api/getnearestlocation", data, headers).then(function (response) {
+    var items = response.data.closestlocation;
+    mymap2.setView([items.geolocation.latitude, items.geolocation.longitude], 13);
+    var marker = L.marker([items.geolocation.latitude, items.geolocation.longitude]).addTo(mymap2);
+    var text = "<strong>".concat(items.address.distrist, "</strong><br><strong>").concat(items.address.county, "</strong><br><strong>").concat(items.postcode, "</strong><br>");
+    var hours = items.hours;
+    hours.forEach(function (hour) {
+      text += "".concat(hour.day.toUpperCase(), " : ").concat(hour.open, " - ").concat(hour.closed != "CLOSED" ? hour.closed : "", " <br>");
+    });
+    marker.bindPopup(text);
+    document.querySelector("#address").innerHTML = text;
+  })["catch"](function (error) {
+    console.log(error);
+  });
+  document.querySelector("#postcode").value = "";
+});
+axios.get("/api/locations").then(function (response) {
   var items = response.data.data;
   items.forEach(function (item) {
     var marker = L.marker([item.geolocation.latitude, item.geolocation.longitude]).addTo(mymap);
@@ -36829,14 +36836,48 @@ form.addEventListener("submit", function (event) {
     Espresso: espresso,
     Lungo: lungo
   };
-  axios.post("http://coffeedrop.test/api/cashback", data, headers).then(function (response) {
-    console.log(response);
+  axios.post("/api/cashback", data, headers).then(function (response) {
+    var amount = response.data.data.Cashback;
+    document.querySelector("#cashback-amount").innerHTML = "You will receive  \xA3 ".concat(amount);
+    document.querySelector("#cashback-alert").classList.add("show");
   })["catch"](function (error) {
     console.log(error);
   });
   document.querySelector("#ristretto").value = "";
   document.querySelector("#espresso").value = "";
   document.querySelector("#lungo").value = "";
+});
+var newshopForm = document.getElementById("newshop-form");
+newshopForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  var postcode = document.querySelector("#postcode-1").value;
+  var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  var opening_time = {};
+  var closing_time = {};
+  days.forEach(function (e, index) {
+    var open_time = document.getElementById("day-open-".concat(index)).value;
+    var close_time = document.getElementById("day-close-".concat(index)).value;
+
+    if (open_time !== null && open_time !== "") {
+      opening_time[e] = open_time;
+      closing_time[e] = close_time;
+    }
+  });
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json"
+  };
+  var data = {
+    postcode: postcode,
+    opening_times: opening_time,
+    closing_times: closing_time
+  };
+  axios.post("/api/locations", data, headers).then(function (response) {
+    console.log(response);
+  })["catch"](function (error) {
+    console.log(error);
+  });
+  document.querySelector("#postcode-1").value = "";
 });
 
 /***/ }),
